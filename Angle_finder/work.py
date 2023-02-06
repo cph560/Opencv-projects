@@ -5,7 +5,7 @@ path = 'acute-angles.jpg'
 img = cv2.imread(path)
 
 pointlist = []
-
+'''click mouse'''
 def mousepoint(event,x,y,flags,params):
   if event==cv2.EVENT_LBUTTONDOWN:
     size = len(pointlist)
