@@ -1,0 +1,1 @@
+add function of camera QR scanning
