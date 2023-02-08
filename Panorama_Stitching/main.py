@@ -21,6 +21,7 @@ for folder in folders:
     if (status == cv2.STITCHER_OK):
         print('Panorama Generated')
         respath = os.getcwd()+'/'+path
+ 
         cv2.imwrite(respath+f'/{folder}result.jpg', res)
         cv2.imshow(folder, res)
         cv2.waitKey(1)
