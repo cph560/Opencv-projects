@@ -1,17 +1,18 @@
 import cv2
 import numpy as np
 import utils
+import os 
 
 # if __name__ == '__main__':
 
 Turn_cam = False
-img_path = '1.png'
+img_path = '2.jpg'
 cam = cv2.VideoCapture(0)
 cam.set(3, 1920)
 cam.set(4, 1280)
 cam.set(10, 160)
-widthImg = 480
-heightImg = 640
+widthImg = 1276
+heightImg = 1702
 
 utils.initializeTrackbars()
 count = 0
@@ -73,20 +74,24 @@ while True:
               ["Biggest Contour","Warp Prespective","Warp Gray","Adaptive Threshold"]]
  
     stackedImage = utils.stackImages(imageArray,0.75,lables)
-    print(stackedImage.shape)
-    # resize = utils.ResizeWithAspectRatio(stackedImage, width=1920)
-    imS = cv2.resize(stackedImage, (960, 1080))    
-    cv2.imshow("Result",imS)
+    # print(stackedImage.shape)
+    resize = utils.ResizeWithAspectRatio(stackedImage, width=1920)
+    # imS = cv2.resize(stackedImage, (960, 1080))    
+    cv2.imshow("Result",resize)
     
     # SAVE IMAGE WHEN 's' key is pressed
     if cv2.waitKey(1) & 0xFF == ord('s'):
-        cv2.imwrite("Scanned/myImage"+str(count)+".jpg", imgWarpColored)
+        respath = os.getcwd()+'/Scanned'
+        if not os.path.exists(respath):
+
+            os.makedirs(respath)
+        cv2.imwrite(f"Scanned/{str(count)}.jpg", imgWarpColored)
         cv2.rectangle(stackedImage, ((int(stackedImage.shape[1] / 2) - 230), int(stackedImage.shape[0] / 2) + 50),
                       (1100, 350), (0, 255, 0), cv2.FILLED)
         cv2.putText(stackedImage, "Scan Saved", (int(stackedImage.shape[1] / 2) - 200, int(stackedImage.shape[0] / 2)),
                     cv2.FONT_HERSHEY_DUPLEX, 3, (0, 0, 255), 5, cv2.LINE_AA)
         cv2.imshow('Result', stackedImage)
-        cv2.waitKey(300)
+        cv2.waitKey(500)
         count += 1
     
     if cv2.waitKey(1) & 0xFF == ord('q'):
