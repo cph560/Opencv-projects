@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import utils
-import os 
+import os
 
 # if __name__ == '__main__':
 
@@ -76,7 +76,7 @@ while True:
     stackedImage = utils.stackImages(imageArray,0.75,lables)
     # print(stackedImage.shape)
     resize = utils.ResizeWithAspectRatio(stackedImage, width=1920)
-    # imS = cv2.resize(stackedImage, (960, 1080))    
+    # imS = cv2.resize(stackedImage, (960, 1080))
     cv2.imshow("Result",resize)
     
     # SAVE IMAGE WHEN 's' key is pressed
