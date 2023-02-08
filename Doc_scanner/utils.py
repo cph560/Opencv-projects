@@ -104,5 +104,4 @@ def ResizeWithAspectRatio(image, width=None, height=None, inter=cv2.INTER_AREA):
     else:
         r = width / float(w)
         dim = (width, int(h * r))
-    
     return cv2.resize(image, dim, interpolation=inter)
