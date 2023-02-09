@@ -43,7 +43,7 @@ def get_objects_no(layer_output, img):
         
         box = bbox[i]
         x, y, w, h = box[0], box[1], box[2], box[3]
-        cv2.rectangle(img, (x ,y), (w, h), (0, 255, 0), 2)
+        cv2.rectangle(img, box, (0, 255, 0), 2)
         cv2.putText(img, f'{classes[objects[i]].upper()} {round(confs[i], 2)}', (x ,y+10),
                     cv2.FONT_HERSHEY_COMPLEX, 0.6, (0, 255, 0),2)
 # print(len(classes))
