@@ -1,5 +1,6 @@
 import cv2 
 import numpy as np
+import time 
 # img = cv2.imread('lena.png')
 
 confthres = 0.5
@@ -8,6 +9,8 @@ cam = cv2.VideoCapture(0)
 cam.set(3, 1280) #width
 cam.set(4, 720) #height
 cam.set(10,150) #brightness
+prev_frame_time = 0
+new_frame_time = 0
 
 classpath = './Object_Detection_Files/coco.names'
 with open(classpath, 'rt') as f:
@@ -33,6 +36,13 @@ while True:
     # print(Ids, confs)
     # print(bbox_list)
     # print(indices)
+    new_frame_time = time.time()
+    fps = 1/(new_frame_time-prev_frame_time)
+    prev_frame_time = new_frame_time
+    fps = int(fps)
+    cv2.putText(img, str(fps), (7, 70),
+                    cv2.FONT_HERSHEY_COMPLEX, 1, (100, 255, 0),2)
+                    
     for i in indices:
         box = bbox_list[i]
         x, y, w, h = box[0], box[1], box[2], box[3]

@@ -1,10 +1,14 @@
 import cv2
 import numpy as np
+import time 
 
 cam = cv2.VideoCapture(0)
 wh = 320
 confThreshold = 0.4
 nmsThreshold = 0.2
+prev_frame_time = 0
+new_frame_time = 0
+
 
 classpath = 'coco.names'
 with open(classpath, 'rt') as f:
@@ -47,12 +51,25 @@ while True:
     success, img = cam.read()
 
     blob = cv2.dnn.blobFromImage(img, 1/255, (wh, wh), swapRB=True, crop=False)
-    nn.setInput(blob)
 
+    new_frame_time = time.time()
+    fps = 1/(new_frame_time-prev_frame_time)
+    prev_frame_time = new_frame_time
+    fps = int(fps)
+    cv2.putText(img, str(fps), (7, 70),
+                    cv2.FONT_HERSHEY_COMPLEX, 1, (100, 255, 0),2)
+
+    nn.setInput(blob)
     layername = list(nn.getLayerNames())
     # print(len(layername))
     outputlayer = [layername[i-1] for i in nn.getUnconnectedOutLayers()]
     output = nn.forward(outputlayer)
     get_objects_no(output, img)
     cv2.imshow('cam', img)
-    cv2.waitKey(1)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# After the loop release the cap object
+cam.release()
+# Destroy all the windows
+cv2.destroyAllWindows()
