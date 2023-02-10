@@ -31,8 +31,9 @@ if __name__ == "__main__":
     
     pytesseract.pytesseract.tesseract_cmd = tesseract_path
     # print(pytesseract.get_tesseract_version())
-    img = cv2.imread('1.JPG')
+    img = cv2.imread('2.JPG')
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     imgH,imgW, _ = img.shape
-    img2word_whole_word_box(img)
+    print(pytesseract.image_to_string(img, lang = 'chi_sim'))
+    # img2word_whole_word_box(img)
 
