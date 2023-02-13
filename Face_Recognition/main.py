@@ -1,3 +1,5 @@
+#Need C++ & cmake 
+
 import cv2
 import face_recognition
  
